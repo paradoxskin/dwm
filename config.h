@@ -9,12 +9,19 @@ static const char *fonts[]          = { "monospace:size=10" ,
 	"WenQuanYi Micro Hei:size=10:type=Regular:antialias=true:autohint=true" ,
 	"Symbols Nerd Font:pixelsize=14:type=2048-em:antialias=true:autohint=true"
 };
+static const unsigned int baralpha = 0x6d;
+static const unsigned int borderalpha = OPAQUE;
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#959cc4";
+static const char col_cyan[]        = "#555555";//"#959cc4";
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+};
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
