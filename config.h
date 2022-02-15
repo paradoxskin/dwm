@@ -62,10 +62,20 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *voldown[]  = { "/home/paradoxxd/Downloads/dwm/voldown.sh", NULL };// change dir when change env
+static const char *volup[]    = { "/home/paradoxxd/Downloads/dwm/volup.sh", NULL };// change dir when change env
+static const char *voltoggle[]= { "/home/paradoxxd/Downloads/dwm/voltoggle.sh", NULL };// change dir when change env
+static const char *bgldown[]= { "/home/paradoxxd/Downloads/dwm/bgldown.sh", NULL };// change dir when change env
+static const char *bglup[]= { "/home/paradoxxd/Downloads/dwm/bglup.sh", NULL };// change dir when change env
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_F1,     spawn,          {.v = voltoggle } },
+	{ MODKEY,                       XK_F2,     spawn,          {.v = voldown } },
+	{ MODKEY,                       XK_F3,     spawn,          {.v = volup } },
+	{ MODKEY,                       XK_F5,     spawn,          {.v = bgldown } },
+	{ MODKEY,                       XK_F6,     spawn,          {.v = bglup } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
