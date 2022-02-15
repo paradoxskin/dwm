@@ -14,7 +14,7 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#959cc4";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -67,7 +67,7 @@ static const char *volup[]    = { "/home/paradoxxd/Downloads/dwm/volup.sh", NULL
 static const char *voltoggle[]= { "/home/paradoxxd/Downloads/dwm/voltoggle.sh", NULL };// change dir when change env
 static const char *bgldown[]  = { "/home/paradoxxd/Downloads/dwm/bgldown.sh", NULL };// change dir when change env
 static const char *bglup[]    = { "/home/paradoxxd/Downloads/dwm/bglup.sh", NULL };// change dir when change env
-static const char *cgbg[]    = { "/home/paradoxxd/Downloads/dwm/cgbg.sh", NULL };// change dir when change env
+static const char *cgbg[]     = { "/home/paradoxxd/Downloads/dwm/cgbg.sh", NULL };// change dir when change env
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
