@@ -1,2 +1,6 @@
 dwm
 *.o
+*.rej
+*.diff
+*.orig
+*.orPOTz3
