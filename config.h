@@ -75,10 +75,12 @@ static const char *voltoggle[]= { "/home/paradoxxd/Downloads/dwm/voltoggle.sh", 
 static const char *bgldown[]  = { "/home/paradoxxd/Downloads/dwm/bgldown.sh", NULL };// change dir when change env
 static const char *bglup[]    = { "/home/paradoxxd/Downloads/dwm/bglup.sh", NULL };// change dir when change env
 static const char *cgbg[]     = { "/home/paradoxxd/Downloads/dwm/cgbg.sh", NULL };// change dir when change env
+static const char *scs[]      = { "/home/paradoxxd/Downloads/dwm/screenshot.sh", NULL };// change dir when change env
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_Print,  spawn,          {.v = scs } },
 	{ MODKEY,                       XK_F1,     spawn,          {.v = voltoggle } },
 	{ MODKEY,                       XK_F2,     spawn,          {.v = voldown } },
 	{ MODKEY,                       XK_F3,     spawn,          {.v = volup } },
