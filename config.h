@@ -29,7 +29,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "  ", "  ", "  ", "  ", "V", "VI", "VII" };
+static const char *tags[] = { "  ", "  ", "  ", "  ", "V", "VI", "VII" , "爵" };
 
 static const Rule rules[] = {
 	/* xprop(1):
