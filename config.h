@@ -76,6 +76,7 @@ static const char *bgldown[]  = { "/home/paradoxxd/Downloads/dwm/bgldown.sh", NU
 static const char *bglup[]    = { "/home/paradoxxd/Downloads/dwm/bglup.sh", NULL };// change dir when change env
 static const char *cgbg[]     = { "/home/paradoxxd/Downloads/dwm/cgbg.sh", NULL };// change dir when change env
 static const char *scs[]      = { "/home/paradoxxd/Downloads/dwm/screenshot.sh", NULL };// change dir when change env
+static const char *swtp[]      = { "/home/paradoxxd/Downloads/dwm/switchtouchpad.sh", NULL };// change dir when change env
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -86,6 +87,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F3,     spawn,          {.v = volup } },
 	{ MODKEY,                       XK_F5,     spawn,          {.v = bgldown } },
 	{ MODKEY,                       XK_F6,     spawn,          {.v = bglup } },
+	{ MODKEY,                       XK_F11,    spawn,          {.v = swtp } },
 	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = cgbg } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
