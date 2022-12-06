@@ -1,5 +1,5 @@
 #!/bin/bash
-id=`xinput|grep TM|awk '{x=$5;split(x,arr,"=");print arr[2];}'`
+id=`xinput|grep TouchPad|awk '{x=$6;split(x,arr,"=");print arr[2];}'`
 flag=`xinput list-props $id|grep 'Device Enabled'|awk '{
 	echo $id
 	if($4=="0"){
