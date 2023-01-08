@@ -22,15 +22,18 @@ static const char *colors[][3]      = {
 	[SchemeStatus]  = { col_gray3, col_gray1,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { "#8bcc85", "#845f8b",  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm]  = { col_gray3, col_gray1,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel]  = { "#dfcebf", "#40515e",  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm]  = { col_gray4, "#0f1d29",  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	//[SchemeInfoSel]  = { "#dfcebf", "#40515e",  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoSel]  = { "#dfcebf", "#000000",  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm]  = { col_gray4, "#000000",  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, OPAQUE, borderalpha },
 	[SchemeTagsSel]  = { OPAQUE, baralpha, borderalpha },
 	[SchemeTagsNorm]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeInfoSel]  = { OPAQUE, 0xaa,  borderalpha  }, 
+	[SchemeInfoNorm]  = { OPAQUE, 0x00,  0x00  }, 
 };
 
 /* tagging */
@@ -74,11 +77,27 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-l", "7", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *voldown[]  = { "/home/paradoxd/.scripts/voldown.sh", NULL };// change dir when change env
+static const char *volup[]    = { "/home/paradoxd/.scripts/volup.sh", NULL };// change dir when change env
+static const char *voltoggle[]= { "/home/paradoxd/.scripts/voltoggle.sh", NULL };// change dir when change env
+static const char *bgldown[]  = { "/home/paradoxd/.scripts/bgldown.sh", NULL };// change dir when change env
+static const char *bglup[]    = { "/home/paradoxd/.scripts/bglup.sh", NULL };// change dir when change env
+static const char *cgbg[]     = { "/home/paradoxd/.scripts/cgbg.sh", NULL };// change dir when change env
+static const char *scs[]      = { "/home/paradoxd/.scripts/screenshot.sh", NULL };// change dir when change env
+static const char *swtp[]      = { "/home/paradoxd/.scripts/switchtouchpad.sh", NULL };// change dir when change env
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY, 			            XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Print,  spawn,          {.v = scs } },
+	{ MODKEY,                       XK_F2,     spawn,          {.v = voltoggle } },
+	{ MODKEY,                       XK_F3,     spawn,          {.v = voldown } },
+	{ MODKEY,                       XK_F4,     spawn,          {.v = volup } },
+	{ MODKEY,                       XK_F5,     spawn,          {.v = bgldown } },
+	{ MODKEY,                       XK_F6,     spawn,          {.v = bglup } },
+	{ MODKEY,                       XK_F1,     spawn,          {.v = swtp } },
+	{ MODKEY, 			            XK_o,      spawn,          {.v = cgbg } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
