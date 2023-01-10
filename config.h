@@ -44,9 +44,10 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class                      instance    title       tags mask     isfloating   monitor */
+	{ "firefox",                  NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "clash",                    NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "netease-cloud-music",      NULL,       NULL,       1 << 3,       0,           -1 },
 };
 
 /* layout(s) */
@@ -66,8 +67,8 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
-#define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+#define TAGKEYS(KEY,TAG,cmd) \
+	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG, .v = cmd} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
@@ -84,7 +85,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY, 			            XK_Return, spawn,          {.v = termcmd } },
-	{ 0,                         XK_Print,  spawn,          SHCMD("~/.scripts/screenshot.sh") },
+	{ 0,                            XK_Print,  spawn,          SHCMD("~/.scripts/screenshot.sh") },
 	{ MODKEY,                       XK_F2,     spawn,          SHCMD("~/.scripts/voltoggle.sh") },
 	{ MODKEY,                       XK_F3,     spawn,          SHCMD("~/.scripts/voldown.sh") },
 	{ MODKEY,                       XK_F4,     spawn,          SHCMD("~/.scripts/volup.sh") },
@@ -92,7 +93,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_F6,     spawn,          SHCMD("~/.scripts/bglup.sh") },
 	{ MODKEY,                       XK_F1,     spawn,          SHCMD("~/.scripts/switchtouchpad.sh") },
 	{ MODKEY, 			            XK_o,      spawn,          SHCMD("~/.scripts/cgbg.sh") },
-	{ MODKEY,                       XK_Delete,  spawn,          SHCMD("slock") },
+	{ MODKEY,                       XK_Delete, spawn,          SHCMD("slock") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -114,15 +115,17 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
+	TAGKEYS(                        XK_1,      0,              0)
+	TAGKEYS(                        XK_2,      1,              0)
+	TAGKEYS(                        XK_3,      2,              0)
+	TAGKEYS(                        XK_4,      3,              0)
+	TAGKEYS(                        XK_5,      4,              0)
+	TAGKEYS(                        XK_6,      5,              0)
+	TAGKEYS(                        XK_7,      6,              0)
+	TAGKEYS(                        XK_8,      7,              0)
+	TAGKEYS(                        XK_9,      8,              0)
+	TAGKEYS(                        XK_f,      2,              "firefox")
+	TAGKEYS(                        XK_v,      8,              "~/.clash/clash -d ~/.clash")
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
