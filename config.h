@@ -48,6 +48,8 @@ static const Rule rules[] = {
 	{ "firefox",                  NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "clash",                    NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "netease-cloud-music",      NULL,       NULL,       1 << 3,       0,           -1 },
+    {"float",                     NULL,       NULL,       0,            1,           -1 },
+
 };
 
 /* layout(s) */
@@ -85,6 +87,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY, 			            XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_space,  spawn,          SHCMD("st -c float -A 0.3") },
 	{ 0,                            XK_Print,  spawn,          SHCMD("~/.scripts/screenshot.sh") },
 	{ MODKEY,                       XK_F2,     spawn,          SHCMD("~/.scripts/voltoggle.sh") },
 	{ MODKEY,                       XK_F3,     spawn,          SHCMD("~/.scripts/voldown.sh") },
@@ -107,7 +110,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	//{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	//{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
