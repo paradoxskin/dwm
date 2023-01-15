@@ -44,11 +44,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class                      instance    title       tags mask     isfloating   monitor */
-	{ "firefox",                  NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "clash",                    NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "netease-cloud-music",      NULL,       NULL,       1 << 3,       0,           -1 },
-    {"float",                     NULL,       NULL,       0,            1,           -1 },
+	/* class                  instance    title                                tags mask     isfloating   monitor */
+	{ "firefox",              NULL,       NULL,                                1 << 2,       0,           -1 },
+	{ "clash",                NULL,       NULL,                                1 << 8,       0,           -1 },
+	{ "netease-cloud-music",  NULL,       NULL,                                1 << 3,       0,           -1 },
+    { "float",                NULL,       NULL,                                0,            1,           -1 },
+    { "feh",                  NULL,       "feh [1 of 1] - /tmp/tmp.png",       0,            1,           -1 },
 
 };
 
@@ -96,6 +97,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_F6,     spawn,          SHCMD("~/.scripts/bglup.sh") },
 	{ MODKEY,                       XK_F1,     spawn,          SHCMD("~/.scripts/switchtouchpad.sh") },
 	{ MODKEY, 			            XK_o,      spawn,          SHCMD("~/.scripts/cgbg.sh") },
+	{ MODKEY, 			            XK_backslash,    spawn,          SHCMD("~/.scripts/capture.sh") },
 	{ MODKEY,                       XK_Delete, spawn,          SHCMD("slock") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
