@@ -131,6 +131,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,            8,              0)
 	TAGKEYS(                        XK_f,            2,              "firefox")
 	TAGKEYS(                        XK_m,            3,              "wyy")
+	//TAGKEYS(                        XK_m,            3,              "st -A 0 -e '/home/paradoxd/.scripts/spotifyTUI.sh'")
 	TAGKEYS(                        XK_v,            8,              "st -e '/home/paradoxd/.scripts/startvpn.sh'")
 	{ MODKEY|ShiftMask,             XK_q,            quit,           {0} },
 };
