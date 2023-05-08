@@ -32,8 +32,8 @@ static const unsigned int alphas[][3]      = {
 	[SchemeSel]  = { OPAQUE, OPAQUE, borderalpha },
 	[SchemeTagsSel]  = { OPAQUE, baralpha, borderalpha },
 	[SchemeTagsNorm]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeInfoSel]  = { OPAQUE, 0xaa,  borderalpha  }, 
-	[SchemeInfoNorm]  = { OPAQUE, 0x00,  0x00  }, 
+	[SchemeInfoSel]  = { OPAQUE, 0xaa,  borderalpha  },
+	[SchemeInfoNorm]  = { OPAQUE, 0x00,  0x00  },
 };
 
 /* tagging */
@@ -144,6 +144,7 @@ static const Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("st -e '/home/paradoxd/.bin/calendar'")},
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
