@@ -1208,12 +1208,20 @@ manage(Window w, XWindowAttributes *wa)
 	c->y = MAX(c->y, c->mon->wy);
 	c->bw = borderpx;
 //add start
-    if (c->isfloating) {
+    if (c->isfloating == 1) {
         if (wa->x==0 && wa->y==0) {
             c->x = selmon->wx + (selmon->ww - c->w) / 2;
             c->y = selmon->wy + (selmon->wh - c->h) / 2;
         }
     }
+	if (c->isfloating == 2) {
+		c->w = 300;
+		c->h = 285;
+        if (wa->x==0 && wa->y==0) {
+            c->x = selmon->ww - c->w;
+            c->y = 24;
+        }
+	}
 //add end
 	wc.border_width = c->bw;
 	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
