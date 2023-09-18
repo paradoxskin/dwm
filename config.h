@@ -1,3 +1,7 @@
+#ifndef first
+#include "dwm.c"
+#endif
+#define first
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */

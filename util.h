@@ -1,3 +1,7 @@
+#ifndef first
+#include "util.c"
+#endif
+#define first
 /* See LICENSE file for copyright and license details. */
 
 #define MAX(A, B)               ((A) > (B) ? (A) : (B))

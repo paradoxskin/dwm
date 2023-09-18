@@ -1,0 +1,37 @@
+[
+{
+  "directory": "/home/paradoxd/suckless/my-dwm-config",
+  "command": "cc -c -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\\\"6.4\\\" -DXINERAMA drw.c",
+  "file": "drw.c"
+},
+
+{
+  "directory": "/home/paradoxd/suckless/my-dwm-config",
+  "command": "cc -c -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\\\"6.4\\\" -DXINERAMA dwm.c",
+  "file": "dwm.c"
+},
+
+{
+  "directory": "/home/paradoxd/suckless/my-dwm-config",
+  "command": "cc -c -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\\\"6.4\\\" -DXINERAMA util.c",
+  "file": "util.c"
+},
+
+{
+  "directory": "/home/paradoxd/suckless/my-dwm-config",
+  "command": "cc -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\\\"6.4\\\" -DXINERAMA -c drw.h",
+  "file": "drw.h"
+},
+
+{
+  "directory": "/home/paradoxd/suckless/my-dwm-config",
+  "command": "cc -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\\\"6.4\\\" -DXINERAMA -c util.h",
+  "file": "util.h"
+},
+
+{
+  "directory": "/home/paradoxd/suckless/my-dwm-config",
+  "command": "cc -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\\\"6.4\\\" -DXINERAMA -c config.h",
+  "file": "config.h"
+}
+]

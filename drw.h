@@ -1,3 +1,7 @@
+#ifndef first
+#include "drw.c"
+#endif
+#define first
 /* See LICENSE file for copyright and license details. */
 
 typedef struct {
