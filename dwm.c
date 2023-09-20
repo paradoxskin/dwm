@@ -245,6 +245,7 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void xinitvisual();
 static void zoom(const Arg *arg);
+static void lastcli(const Arg *arg);
 
 /* variables */
 static const char autostartblocksh[] = "autostart_blocking.sh";
@@ -2435,6 +2436,24 @@ zoom(const Arg *arg)
 	if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
 		return;
 	pop(c);
+}
+// -- my function --
+void
+lastcli(const Arg *arg)
+{
+	// debug
+	//FILE *fp = NULL;
+	//fp = fopen("/tmp/debug.txt", "w+");
+	//fprintf(fp, "%d %d", selmon->sel->tags, selmon->sel->snext->tags);
+	//fclose(fp);
+	if(selmon->sel && selmon->sel->snext) {
+		if(selmon->sel->tags == selmon->sel->snext->tags) {
+			focus(selmon->sel->snext);
+			return;
+		}
+	}
+	Arg tmp = {0};
+	view(&tmp);
 }
 
 int
