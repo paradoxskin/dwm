@@ -97,7 +97,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
+	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isfreeze;
 	Client *next;
 	Client *snext;
 	Monitor *mon;
@@ -178,7 +178,6 @@ static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static void freeze(const Arg *arg);
-static void heat(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
@@ -1026,32 +1025,16 @@ freeze(const Arg *arg)
             char pid[64] = {0};
             fgets(pid, 64, output);
             char *cmd2;
-            asprintf(&cmd2, "kill -STOP %s", pid);
-            if (cmd2 != NULL) {
-                system(cmd2);
-                free(cmd2);
+            if (selmon->sel->isfreeze == 1) {
+                asprintf(&cmd2, "kill -CONT %s", pid);
             }
-        }
-        free(cmd);
-    }
-}
-
-void
-heat(const Arg *arg)
-{
-    unsigned long wid = selmon->sel->win;
-    char *cmd;
-    asprintf(&cmd, "xprop -id %lu | grep _PID | awk -F'=' '{print $2}' | tr -d ' '", wid);
-    if (cmd != NULL) {
-        FILE *output;
-        output = popen(cmd, "r");
-        if (output != NULL) {
-            char pid[64] = {0};
-            fgets(pid, 64, output);
-            char *cmd2;
-            asprintf(&cmd2, "kill -CONT %s", pid);
+            else {
+                asprintf(&cmd2, "kill -STOP %s", pid);
+            }
             if (cmd2 != NULL) {
                 system(cmd2);
+                selmon->sel->isfreeze = 1 - selmon->sel->isfreeze;
+                free(cmd2);
             }
         }
         free(cmd);

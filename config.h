@@ -114,7 +114,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_h,            setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,            setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_s,            freeze,         {0} },
-	{ MODKEY,                       XK_w,            heat,           {0} },
 	{ MODKEY,                       XK_z,            zoom,           {0} },
 	{ MODKEY,                       XK_Tab,          lastcli,        {0} },
 	{ MODKEY, 			            XK_q,            killclient,     {0} },
