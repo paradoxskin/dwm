@@ -64,7 +64,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel, SchemeStatus, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeSelForze, SchemeStatus, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
@@ -952,7 +952,12 @@ focus(Client *c)
 		detachstack(c);
 		attachstack(c);
 		grabbuttons(c, 1);
-		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+        if (c->isfreeze) {
+            XSetWindowBorder(dpy, c->win, scheme[SchemeSelForze][ColBorder].pixel);
+        }
+        else {
+            XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+        }
 		setfocus(c);
 	} else {
 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
@@ -1027,9 +1032,11 @@ freeze(const Arg *arg)
             char *cmd2;
             if (selmon->sel->isfreeze == 1) {
                 asprintf(&cmd2, "kill -CONT %s", pid);
+                XSetWindowBorder(dpy, selmon->sel->win, scheme[SchemeSel][ColBorder].pixel);
             }
             else {
                 asprintf(&cmd2, "kill -STOP %s", pid);
+                XSetWindowBorder(dpy, selmon->sel->win, scheme[SchemeSelForze][ColBorder].pixel);
             }
             if (cmd2 != NULL) {
                 system(cmd2);
