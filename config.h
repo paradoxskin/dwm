@@ -10,7 +10,7 @@ static const unsigned int gappx     = 2;        /* gap pixel between windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "SauceCodePro Nerd Font:size=12" };
+static const char *fonts[]          = { "SauceCodePro Nerd Font:size=12:antialias=true:autohing=true" };
 static const char dmenufont[]       = "Source Code Pro:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_pink  },
 	[SchemeSelForze]  = { col_gray4, col_cyan,  col_ice  },
 	[SchemeStatus]  = { col_gray3, col_gray1,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  = { "#8bcc85", "#a86b90",  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  = { col_ice, "#a86b90",  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm]  = { col_gray3, col_gray1,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
 	//[SchemeInfoSel]  = { "#dfcebf", "#40515e",  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
 	[SchemeInfoSel]  = { "#dfcebf", "#010101",  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
@@ -44,7 +44,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "¹", "二", "³", "⁴", "五", "六", "七", "八", "⁹切" };
+static const char *tags[] = { "¹", "²", "³", "⁴󰲑", "五", "六", "七", "八", "⁹" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -71,8 +71,8 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	//{ "[]=",      tile },    /* first entry is default */
 	//{ "<><",      NULL },    /* no layout function means floating behavior */
-	{ "﬿ ",      tile },    /* first entry is default */
-	{ " ",      NULL },    /* no layout function means floating behavior */
+	{ "󱂫 ",      tile },    /* first entry is default */
+	{ "󰘸 ",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
 
