@@ -96,7 +96,7 @@ static const Key keys[] = {
 	/* modifier                     key              function        argument */
 	{ MODKEY,                       XK_p,            spawn,          {.v = dmenucmd } },
 	{ MODKEY, 			            XK_Return,       spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_space,        spawn,          SHCMD("st -c float -A 0.3") },
+	{ MODKEY,                       XK_space,        spawn,          SHCMD("st -c float -A 0.5") },
 	{ 0,                            XK_Print,        spawn,          SHCMD("~/.scripts/screenshot.sh") },
 	{ MODKEY,                       XK_F2,           spawn,          SHCMD("~/.scripts/voltoggle.sh") },
 	{ MODKEY,                       XK_F3,           spawn,          SHCMD("~/.scripts/voldown.sh") },

@@ -2,3 +2,4 @@
 dwm
 *.orig
 *.idx
+.ccls-cache/*
