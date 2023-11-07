@@ -118,6 +118,10 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_s,            freeze,         {0} },
 	{ MODKEY,                       XK_z,            zoom,           {0} },
 	{ MODKEY,                       XK_Tab,          lastcli,        {0} },
+	{ MODKEY,                       XK_comma,        goprevvis,        {0} },
+	{ MODKEY,                       XK_period,       gonextvis,        {0} },
+	{ MODKEY|ShiftMask,                       XK_comma,        goprev,        {0} },
+	{ MODKEY|ShiftMask,                       XK_period,       gonext,        {0} },
 	{ MODKEY, 			            XK_q,            killclient,     {0} },
 	{ MODKEY,                       XK_t,            setlayout,      {.v = &layouts[0]} },
 	//{ MODKEY,                       XK_f,            setlayout,      {.v = &layouts[1]} },
@@ -139,7 +143,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,            7,              0)
 	TAGKEYS(                        XK_9,            8,              0)
 	TAGKEYS(                        XK_f,            2,              "firefox")
-	TAGKEYS(                        XK_m,            3,              "st -e ncspot")
+	TAGKEYS(                        XK_m,            3,              "spotify")
+	//TAGKEYS(                        XK_m,            3,              "st -e ncspot")
 	//TAGKEYS(                        XK_m,            3,              "st -A 0 -e '/home/paradoxd/.scripts/spotifyTUI.sh'")
 	TAGKEYS(                        XK_v,            8,              "st -e '/home/paradoxd/.scripts/startvpn.sh'")
 	{ MODKEY|ShiftMask,             XK_q,            quit,           {0} },

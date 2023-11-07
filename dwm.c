@@ -182,6 +182,10 @@ static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
+static void gonext(const Arg * arg);
+static void gonextvis(const Arg * arg);
+static void goprev(const Arg * arg);
+static void goprevvis(const Arg * arg);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
 static void incnmaster(const Arg *arg);
@@ -1113,6 +1117,66 @@ gettextprop(Window w, Atom atom, char *text, unsigned int size)
 	text[size - 1] = '\0';
 	XFree(name.value);
 	return 1;
+}
+
+void
+gonext(const Arg *arg)
+{
+    unsigned int now = selmon->tagset[selmon->seltags];
+    if(now & (now - 1) || (now << 1) >= TAGMASK)
+        return;
+    Arg a = {.ui = now << 1};
+    view(&a);
+}
+
+void
+gonextvis(const Arg *arg)
+{
+    unsigned int now = selmon->tagset[selmon->seltags];
+    if(now & (now - 1))
+        return;
+    unsigned int occ = 0;
+    for (Client *c = selmon->clients; c; c = c->next) {
+        occ |= c->tags;
+    }
+    while(now < TAGMASK) {
+        now <<= 1;
+        if(now & occ) {
+            Arg a = {.ui = now};
+            view(&a);
+            return;
+        }
+    }
+}
+
+void
+goprev(const Arg *arg)
+{
+    unsigned int now = selmon->tagset[selmon->seltags];
+    if(now & (now - 1) || now == 1)
+        return;
+    Arg a = {.ui = now >> 1};
+    view(&a);
+}
+
+void
+goprevvis(const Arg *arg)
+{
+    unsigned int now = selmon->tagset[selmon->seltags];
+    if(now & (now - 1))
+        return;
+    unsigned int occ = 0;
+    for (Client *c = selmon->clients; c; c = c->next) {
+        occ |= c->tags;
+    }
+    while(now > 0) {
+        now >>= 1;
+        if(now & occ) {
+            Arg a = {.ui = now};
+            view(&a);
+            return;
+        }
+    }
 }
 
 void
