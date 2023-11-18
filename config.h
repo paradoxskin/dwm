@@ -106,6 +106,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_F1,           spawn,          SHCMD("~/.scripts/switchtouchpad.sh") },
 	{ MODKEY, 			            XK_o,            spawn,          SHCMD("~/.scripts/cgbg.sh") },
 	{ MODKEY|ShiftMask,             XK_o,            spawn,          SHCMD("~/.scripts/cgwkbg.sh") },
+	{ MODKEY, 			            XK_minus,            spawn,          SHCMD("~/.scripts/orangeScreen.sh") },
 	{ MODKEY, 			            XK_backslash,    spawn,          SHCMD("~/.scripts/capture.sh") },
 	{ MODKEY,                       XK_Delete,       spawn,          SHCMD("slock") },
 	{ MODKEY,                       XK_b,            togglebar,      {0} },
