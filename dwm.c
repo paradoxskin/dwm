@@ -191,6 +191,7 @@ static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
+static void keyrelease(XEvent *e);
 static void killclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
@@ -277,6 +278,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 	[Expose] = expose,
 	[FocusIn] = focusin,
 	[KeyPress] = keypress,
+      [KeyRelease] = keyrelease,
 	[MappingNotify] = mappingnotify,
 	[MapRequest] = maprequest,
 	[MotionNotify] = motionnotify,
@@ -1262,7 +1264,7 @@ keypress(XEvent *e)
 	unsigned int i;
 	KeySym keysym;
 	XKeyEvent *ev;
-
+    //XUngrabKey(dpy, AnyKey, AnyModifier, root);
 	ev = &e->xkey;
 	keysym = XKeycodeToKeysym(dpy, (KeyCode)ev->keycode, 0);
     if (keysym == putin_trigger.keysym
@@ -1279,8 +1281,20 @@ keypress(XEvent *e)
                 keys[i].func(&(keys[i].arg));
     }
     else{
-        XSendEvent(dpy, selmon->sel->win, False, KeyPressMask, e);
+        // press
+        XSendEvent(dpy, selmon->sel->win, True, KeyPressMask, (XEvent *)ev);
+        // release
+        ev->type = KeyRelease;
+        XSendEvent(dpy, selmon->sel->win, True, KeyPressMask, (XEvent *)ev);
     }
+}
+
+void
+keyrelease(XEvent *e)
+{
+    //if(selmon->putin) {
+    //    XSendEvent(dpy, selmon->sel->win, False, KeyReleaseMask, e);
+    //}
 }
 
 void
