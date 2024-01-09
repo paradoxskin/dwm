@@ -6,16 +6,15 @@
 # build
 cp -f dwm ./docker/
 cp -f <st_path> ./docker/
-cp -r .scripts ./docker/
+cp -r scripts ./docker/
 docker build -t dwm_test .
 docker run -d -v /usr/share/fonts/:/usr/share/fonts/:ro -p 5901:5901 --name suckless_dwm dwm_test
 
 # start
-docker start suckless_dwm
-docker exec -u root -d suckless_dwm bash -c 'vncserver :1'
+make start
 
 # stop
-docker stop suckless_dwm
+make stop
 
 # reflash
 make clean test

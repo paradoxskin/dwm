@@ -48,6 +48,13 @@ uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
+start:
+	docker start suckless_dwm
+	docker exec -u root -d suckless_dwm bash -c 'vncserver :1'
+
+stop:
+	docker stop suckless_dwm
+
 test: all
 	pid=$$(docker exec suckless_dwm ps aux | grep dwm | grep -v grep | awk '{print $$2}') ; \
 	if [ -n "$$pid" ]; then \
@@ -57,4 +64,4 @@ test: all
 	docker exec -u root -d suckless_dwm bash -c 'vncserver :1'
 
 
-.PHONY: all options clean dist install uninstall test
+.PHONY: all options clean dist install uninstall start stop test

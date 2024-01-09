@@ -136,6 +136,7 @@ struct Monitor {
 	Monitor *next;
 	Window barwin;
 	const Layout *lt[2];
+    unsigned int putin;
 };
 
 typedef struct {
@@ -222,6 +223,7 @@ static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
+static void switch_putin(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
@@ -1215,7 +1217,7 @@ grabkeys(void)
 		syms = XGetKeyboardMapping(dpy, start, end - start + 1, &skip);
 		if (!syms)
 			return;
-		for (k = start; k <= end; k++)
+		for (k = start; k <= end; k++) {
 			for (i = 0; i < LENGTH(keys); i++)
 				/* skip modifier codes, we do that ourselves */
 				if (keys[i].keysym == syms[(k - start) * skip])
@@ -1224,6 +1226,13 @@ grabkeys(void)
 							 keys[i].mod | modifiers[j],
 							 root, True,
 							 GrabModeAsync, GrabModeAsync);
+            if (putin_trigger.keysym == syms[(k - start) * skip])
+                for (j = 0; j < LENGTH(modifiers); j++)
+                    XGrabKey(dpy, k,
+                             putin_trigger.mod | modifiers[j],
+                             root, True,
+                             GrabModeAsync, GrabModeAsync);
+        }
 		XFree(syms);
 	}
 }
@@ -1256,11 +1265,22 @@ keypress(XEvent *e)
 
 	ev = &e->xkey;
 	keysym = XKeycodeToKeysym(dpy, (KeyCode)ev->keycode, 0);
-	for (i = 0; i < LENGTH(keys); i++)
-		if (keysym == keys[i].keysym
-		&& CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)
-		&& keys[i].func)
-			keys[i].func(&(keys[i].arg));
+    if (keysym == putin_trigger.keysym
+        && CLEANMASK(putin_trigger.mod) == CLEANMASK(ev->state)
+        && putin_trigger.func) {
+        putin_trigger.func(&(putin_trigger.arg));
+        return;
+    }
+    if(!selmon->putin) {
+        for (i = 0; i < LENGTH(keys); i++)
+            if (keysym == keys[i].keysym
+                && CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)
+                && keys[i].func)
+                keys[i].func(&(keys[i].arg));
+    }
+    else{
+        XSendEvent(dpy, selmon->sel->win, False, KeyPressMask, e);
+    }
 }
 
 void
@@ -2012,6 +2032,12 @@ spawn(const Arg *arg)
 		execvp(((char **)arg->v)[0], (char **)arg->v);
 		die("dwm: execvp '%s' failed:", ((char **)arg->v)[0]);
 	}
+}
+
+void
+switch_putin(const Arg *arg)
+{
+    selmon->putin = 1 - (selmon->putin);
 }
 
 void
