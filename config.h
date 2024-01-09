@@ -93,6 +93,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 
 static const Key putin_trigger = {MODKEY, XK_equal, switch_putin, {0}};
+static int putin_trigger_keycode;
+static int keycode[300];
 static const Key keys[] = {
 	/* modifier                     key              function        argument */
 	{ MODKEY,                       XK_p,            spawn,          {.v = dmenucmd } },

@@ -180,6 +180,7 @@ static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static void freeze(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
+static void getkeycode();
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
@@ -1072,6 +1073,25 @@ getatomprop(Client *c, Atom prop)
 	return atom;
 }
 
+void
+getkeycode()
+{
+    unsigned int i, k;
+    int start, end, skip;
+    KeySym *syms;
+    XDisplayKeycodes(dpy, &start, &end);
+    syms = XGetKeyboardMapping(dpy, start, end - start + 1, &skip);
+    if (!syms)
+        return;
+    for (k = start; k <= end; k++) {
+        for (i = 0; i < LENGTH(keys); i++)
+            if (keys[i].keysym == syms[(k - start) * skip])
+                keycode[i] = k;
+        if (putin_trigger.keysym == syms[(k - start) * skip])
+            putin_trigger_keycode = k;
+    }
+}
+
 int
 getrootptr(int *x, int *y)
 {
@@ -1209,33 +1229,21 @@ grabkeys(void)
 {
 	updatenumlockmask();
 	{
-		unsigned int i, j, k;
+		unsigned int i, j;
 		unsigned int modifiers[] = { 0, LockMask, numlockmask, numlockmask|LockMask };
-		int start, end, skip;
-		KeySym *syms;
-
 		XUngrabKey(dpy, AnyKey, AnyModifier, root);
-		XDisplayKeycodes(dpy, &start, &end);
-		syms = XGetKeyboardMapping(dpy, start, end - start + 1, &skip);
-		if (!syms)
-			return;
-		for (k = start; k <= end; k++) {
-			for (i = 0; i < LENGTH(keys); i++)
-				/* skip modifier codes, we do that ourselves */
-				if (keys[i].keysym == syms[(k - start) * skip])
-					for (j = 0; j < LENGTH(modifiers); j++)
-						XGrabKey(dpy, k,
-							 keys[i].mod | modifiers[j],
-							 root, True,
-							 GrabModeAsync, GrabModeAsync);
-            if (putin_trigger.keysym == syms[(k - start) * skip])
-                for (j = 0; j < LENGTH(modifiers); j++)
-                    XGrabKey(dpy, k,
-                             putin_trigger.mod | modifiers[j],
-                             root, True,
-                             GrabModeAsync, GrabModeAsync);
-        }
-		XFree(syms);
+        for (i = 0; i < LENGTH(keys); i++)
+            /* skip modifier codes, we do that ourselves */
+            for (j = 0; j < LENGTH(modifiers); j++)
+                XGrabKey(dpy, keycode[i],
+                     keys[i].mod | modifiers[j],
+                     root, True,
+                     GrabModeAsync, GrabModeAsync);
+        for (j = 0; j < LENGTH(modifiers); j++)
+            XGrabKey(dpy, putin_trigger_keycode,
+                     putin_trigger.mod | modifiers[j],
+                     root, True,
+                     GrabModeAsync, GrabModeAsync);
 	}
 }
 
@@ -1273,20 +1281,11 @@ keypress(XEvent *e)
         putin_trigger.func(&(putin_trigger.arg));
         return;
     }
-    if(!selmon->putin) {
-        for (i = 0; i < LENGTH(keys); i++)
-            if (keysym == keys[i].keysym
-                && CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)
-                && keys[i].func)
-                keys[i].func(&(keys[i].arg));
-    }
-    else{
-        // press
-        XSendEvent(dpy, selmon->sel->win, True, KeyPressMask, (XEvent *)ev);
-        // release
-        ev->type = KeyRelease;
-        XSendEvent(dpy, selmon->sel->win, True, KeyPressMask, (XEvent *)ev);
-    }
+    for (i = 0; i < LENGTH(keys); i++)
+        if (keysym == keys[i].keysym
+            && CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)
+            && keys[i].func)
+            keys[i].func(&(keys[i].arg));
 }
 
 void
@@ -1991,6 +1990,7 @@ setup(void)
 		|LeaveWindowMask|StructureNotifyMask|PropertyChangeMask;
 	XChangeWindowAttributes(dpy, root, CWEventMask|CWCursor, &wa);
 	XSelectInput(dpy, root, wa.event_mask);
+    getkeycode();
 	grabkeys();
 	focus(NULL);
 }
@@ -2051,7 +2051,18 @@ spawn(const Arg *arg)
 void
 switch_putin(const Arg *arg)
 {
-    selmon->putin = 1 - (selmon->putin);
+    if(selmon->putin) {
+        selmon->putin = 0;
+		XUngrabKey(dpy, AnyKey, AnyModifier, root);
+        XGrabKey(dpy, putin_trigger_keycode,
+                 putin_trigger.mod,
+                 root, True,
+                 GrabModeAsync, GrabModeAsync);
+    }
+    else {
+        selmon->putin = 1;
+        grabkeys();
+    }
 }
 
 void
