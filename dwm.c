@@ -165,6 +165,7 @@ static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static Monitor *createmon(void);
+static void debug(const Arg *arg);
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
@@ -695,6 +696,29 @@ createmon(void)
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
 	return m;
+}
+
+void
+debug(const Arg *arg) {
+    // FILE *fp = NULL;
+    // fp = fopen("/tmp/debug.txt", "w+");
+    // Client *c = selmon->stack;
+    // Atom actualType;
+    // int actualFormat;
+    // unsigned long itemCount, bytesAfter;
+    // unsigned char *data = NULL;
+    // while(c) {
+    //     XGetWindowProperty(
+    //         dpy, c->win,
+    //         XInternAtom(dpy, "_NET_WM_PID", False),
+    //         0, 1, False, XA_CARDINAL,
+    //         &actualType, &actualFormat, &itemCount, &bytesAfter, &data);
+    //     fprintf(fp, "%d(%u) -> ", *((pid_t*)data), c->tags);
+    //     XFree(data);
+    //     c = c->next;
+    // }
+    // fprintf(fp, "null \n");
+    // fclose(fp);
 }
 
 void
