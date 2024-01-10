@@ -2,14 +2,20 @@
 > dwm is an extremely fast, small, and dynamic window manager for X.
 
 ## Docker
+> Don't logout to test dwm anymore.
+### before
 ```bash
-# build
 cp -f dwm ./docker/
 cp -f <st_path> ./docker/
 cp -r scripts ./docker/
+```
+### build
+```bash
 docker build -t dwm_test .
 docker run -d -v /usr/share/fonts/:/usr/share/fonts/:ro -p 5901:5901 --name suckless_dwm dwm_test
-
+```
+### use
+```bash
 # start
 make start
 
@@ -18,6 +24,11 @@ make stop
 
 # reflash
 make clean test
+```
+### connect
+> :dwm@127.0.0.1:5901
+```
+vncviewer
 ```
 ## Requirements
 In order to build dwm you need the Xlib header files.
