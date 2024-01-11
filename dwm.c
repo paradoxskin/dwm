@@ -1109,7 +1109,7 @@ getkeycode()
         return;
     for (k = start; k <= end; k++) {
         for (i = 0; i < LENGTH(keys); i++)
-            if (keys[i].keysym == syms[(k - start) * skip])
+            if (keys[i].keysym == syms[(k - start) * skip] && keycode[i] == 0)
                 keycode[i] = k;
         if (putin_trigger.keysym == syms[(k - start) * skip])
             putin_trigger_keycode = k;
