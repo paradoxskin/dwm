@@ -718,6 +718,7 @@ debug(const Arg *arg) {
     //     c = c->next;
     // }
     // fprintf(fp, "null \n");
+    // fprintf(fp, "%d\n", arg->i);
     // fclose(fp);
 }
 
@@ -1443,7 +1444,7 @@ monocle(Monitor *m)
 		if (ISVISIBLE(c))
 			n++;
 	if (n > 0) /* override layout symbol */
-		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n);
+		snprintf(m->ltsymbol, sizeof m->ltsymbol, "󱞟%d", n);
 	for (c = nexttiled(m->clients); c; c = nexttiled(c->next))
 		resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
 }
@@ -1920,10 +1921,18 @@ setfullscreen(Client *c, int fullscreen)
 void
 setlayout(const Arg *arg)
 {
-	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
+    // must have zero
+	if (!arg || !arg->v || selmon->sellt == 0)
 		selmon->sellt ^= 1;
-	if (arg && arg->v)
-		selmon->lt[selmon->sellt] = (Layout *)arg->v;
+	if (arg && arg->v) {
+        int i;
+        for (i = 1; i < LENGTH(layouts); i++) {
+            if (&layouts[i] == (selmon->lt[selmon->sellt])) break;
+        }
+        if (i == LENGTH(layouts) - 1) i = 1;
+        else i += 1;
+		selmon->lt[selmon->sellt] = &layouts[i];
+    }
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
 	if (selmon->sel)
 		arrange(selmon);
