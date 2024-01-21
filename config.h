@@ -58,7 +58,7 @@ static const Rule rules[] = {
     { "float",                NULL,       NULL,                                0,            1,           -1 },
     { "float2",               NULL,       NULL,                                0,            2,           -1 },
     { "feh",                  NULL,       "feh [1 of 1] - /tmp/tmp.png",       0,            1,           -1 },
-    { "flameshot",            NULL,       "float",                             0,            1,           -1 },
+    { "flameshot",            NULL,       "float",                             0,            3,           -1 },
 
 };
 
