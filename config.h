@@ -21,6 +21,7 @@ static const char col_pink[]		= "#ff99cc";
 static const char col_ice[]		    = "#57c6fe";
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
+static const char gamepad_path[] = "/dev/input/event14";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -29,7 +30,6 @@ static const char *colors[][3]      = {
 	[SchemeStatus]  = { col_gray3, col_gray1,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { col_ice, "#a86b90",  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm]  = { col_gray3, col_gray1,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	//[SchemeInfoSel]  = { "#dfcebf", "#40515e",  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
 	[SchemeInfoSel]  = { "#dfcebf", "#010101",  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
 	[SchemeInfoNorm]  = { col_gray4, "#000000",  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
@@ -96,18 +96,31 @@ static const char *termcmd[]  = { "st", NULL };
 static const Key putin_trigger = {MODKEY, XK_equal, switch_putin, {0}};
 static int putin_trigger_keycode;
 static int keycode[300];
+static const GP gps[] = {
+    { 3, 1, 0,   XK_F4},
+    { 3, 1, 255, XK_F3},
+    { 3, 0, 0,   XK_comma},
+    { 3, 0, 255, XK_period},
+    { 1, 288, 1, XK_s}, // X
+    { 1, 289, 1, XK_Tab}, // A
+    { 1, 290, 1, XK_q}, // B
+    { 1, 291, 1, XK_o}, // Y
+    { 1, 296, 1, XK_Print},
+    { 1, 297, 1, XK_backslash},
+};
 static const Key keys[] = {
 	/* modifier                     key              function        argument */
 	{ MODKEY,                       XK_p,            spawn,          {.v = dmenucmd } },
 	{ MODKEY, 			            XK_Return,       spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_space,        spawn,          SHCMD("st -c float -A 0.5") },
-	{ 0,                            XK_Print,        spawn,          SHCMD("~/.scripts/screenshot.sh") },
+	{ MODKEY,                       XK_Print,        spawn,          SHCMD("~/.scripts/screenshot.sh") },
+	{ MODKEY,                       XK_F1,           spawn,          SHCMD("~/.scripts/switchtouchpad.sh") },
 	{ MODKEY,                       XK_F2,           spawn,          SHCMD("~/.scripts/voltoggle.sh") },
 	{ MODKEY,                       XK_F3,           spawn,          SHCMD("~/.scripts/voldown.sh") },
 	{ MODKEY,                       XK_F4,           spawn,          SHCMD("~/.scripts/volup.sh") },
 	{ MODKEY,                       XK_F5,           spawn,          SHCMD("~/.scripts/bgldown.sh") },
 	{ MODKEY,                       XK_F6,           spawn,          SHCMD("~/.scripts/bglup.sh") },
-	{ MODKEY,                       XK_F1,           spawn,          SHCMD("~/.scripts/switchtouchpad.sh") },
+	{ MODKEY,                       XK_F12,          gamepadcon,     {0} },
 	{ MODKEY, 			            XK_o,            spawn,          SHCMD("~/.scripts/cgbg.sh") },
 	{ MODKEY|ShiftMask,             XK_o,            spawn,          SHCMD("~/.scripts/cgwkbg.sh") },
 	{ MODKEY, 			            XK_minus,            spawn,          SHCMD("~/.scripts/orangeScreen.sh") },

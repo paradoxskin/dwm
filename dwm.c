@@ -42,6 +42,11 @@
 #include <X11/extensions/Xinerama.h>
 #endif /* XINERAMA */
 #include <X11/Xft/Xft.h>
+#include <X11/extensions/XTest.h>
+#include <fcntl.h>
+#include <linux/input.h>
+#include <pthread.h>
+
 
 #include "drw.h"
 #include "util.h"
@@ -103,6 +108,13 @@ struct Client {
 	Monitor *mon;
 	Window win;
 };
+
+typedef struct {
+    unsigned int type;
+    unsigned int code;
+    unsigned int value;
+    KeySym keysym;
+} GP;
 
 typedef struct {
 	unsigned int mod;
@@ -180,6 +192,8 @@ static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static void freeze(const Arg *arg);
+static void gamepadcon(const Arg *arg);
+static void* gamepadloop(void *);
 static Atom getatomprop(Client *c, Atom prop);
 static void getkeycode();
 static int getrootptr(int *x, int *y);
@@ -268,6 +282,7 @@ static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh;               /* bar height */
 static int lrpad;            /* sum of left and right padding for text */
+static int gp_running;
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
 static void (*handler[LASTEvent]) (XEvent *) = {
@@ -1080,6 +1095,52 @@ freeze(const Arg *arg)
         }
         free(cmd);
     }
+}
+
+void
+gamepadcon(const Arg *arg)
+{
+    gp_running ^= 1;
+    if (gp_running) {
+        pthread_t thread_id;
+        pthread_create(&thread_id, NULL, gamepadloop, NULL);
+    }
+}
+
+void*
+gamepadloop(void* arg)
+{
+    int fd;
+    struct input_event ev;
+    while (gp_running) {
+        fd = open(gamepad_path, 0);
+        if (fd < 0) {
+            system("notify-send gp-con 'Failed to open device'");
+            usleep(10000000);
+            continue;
+        }
+        system("notify-send gp-con 'Connect device'");
+        int last = 0;
+        int now = 100;
+        while (gp_running) {
+            read(fd, &ev, sizeof(struct input_event));
+            now = (ev.type | ev.code | ev.value);
+            if ((now | last) == 0) break;
+            for (int i=0; i < LENGTH(gps); i++) {
+                if (gps[i].type == ev.type && gps[i].code == ev.code && gps[i].value == ev.value) {
+                    XTestFakeKeyEvent(dpy, XKeysymToKeycode(dpy, XK_Super_L), True, CurrentTime);
+                    XTestFakeKeyEvent(dpy, XKeysymToKeycode(dpy, gps[i].keysym), True, CurrentTime);
+                    XTestFakeKeyEvent(dpy, XKeysymToKeycode(dpy, gps[i].keysym), False, CurrentTime);
+                    XTestFakeKeyEvent(dpy, XKeysymToKeycode(dpy, XK_Super_L), False, CurrentTime);
+                    XFlush(dpy);
+                    break;
+                }
+            }
+            last = now;
+        }
+        close(fd);
+    }
+    return NULL;
 }
 
 Atom
