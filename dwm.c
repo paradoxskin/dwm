@@ -2492,6 +2492,7 @@ view(const Arg *arg)
 {
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags]) {
 		if (arg->v && selmon->bt == 0) {
+                  selmon->bt=-1;
 			Arg a = { .v = (const char*[]){ "/bin/sh", "-c", arg->v, NULL } };
 			spawn(&a);
 		}
@@ -2504,6 +2505,7 @@ view(const Arg *arg)
 	arrange(selmon);
 
     if (arg->v && selmon->bt == 0) {
+        selmon->bt=-1;
         Arg a = { .v = (const char*[]){ "/bin/sh", "-c", arg->v, NULL } };
         spawn(&a);
     }
