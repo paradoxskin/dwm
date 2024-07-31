@@ -22,6 +22,7 @@ static const char col_pink[]        = "#ff99cc";
 static const char col_ice[]         = "#57c6fe";
 static const unsigned int baralpha  = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
+static const unsigned int topmask   = 1 << 30;
 static const char *colors[][3]      = {
     /*                    fg         bg         border   */
     [SchemeNorm]      = { col_gray3, col_gray1, col_gray2 },
@@ -58,6 +59,7 @@ static const Rule rules[] = {
     { "float2",               NULL,       NULL,                                0,            2,           -1 },
     { "feh",                  NULL,       "feh [1 of 1] - /tmp/tmp.png",       0,            1,           -1 },
     { "flameshot",            NULL,       "float",                             0,            3,           -1 },
+    { "XVkbd",                NULL,       NULL,                                topmask,      3,           -1 },
 
 };
 
