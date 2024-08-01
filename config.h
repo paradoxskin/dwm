@@ -60,13 +60,13 @@ static const Rule rules[] = {
     { "float2",               NULL,       NULL,                                0,            2,           -1 },
     { "feh",                  NULL,       "feh [1 of 1] - /tmp/tmp.png",       0,            1,           -1 },
     { "flameshot",            NULL,       "float",                             0,            3,           -1 },
-    { "XVkbd",                NULL,       NULL,                                topmask,      3,           -1 },
+    { "XVkbd",                NULL,       NULL,                                topmask,      sfloat,      -1 },
 
 };
 
 static const FloatRule float_rules[] = {
     /* class   instance title x    y */
-    { "XVkbd", NULL,    NULL, 100, 500},
+    { "XVkbd", NULL,    NULL, 0, 1080},
 };
 
 /* layout(s) */

@@ -161,6 +161,7 @@ typedef struct {
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
+static void applysfloatrules(Client *c);
 static void arrange(Monitor *m);
 static void arrangemon(Monitor *m);
 static void attach(Client *c);
@@ -1386,13 +1387,16 @@ manage(Window w, XWindowAttributes *wa)
             c->y = selmon->wy + (selmon->wh - c->h) / 2;
         }
     }
-    if (c->isfloating == 2) {
+    else if (c->isfloating == 2) {
         c->w = 300;
         c->h = 285;
         if (wa->x==0 && wa->y==0) {
             c->x = selmon->ww - c->w;
             c->y = 24;
         }
+    }
+    else if (c->isfloating == sfloat) {
+        applysfloatrules(c);
     }
 //add end
     wc.border_width = c->bw;
@@ -1420,6 +1424,31 @@ manage(Window w, XWindowAttributes *wa)
     arrange(c->mon);
     XMapWindow(dpy, c->win);
     focus(NULL);
+}
+
+void
+applysfloatrules(Client *c) {
+    const char *class, *instance;
+    unsigned int i;
+    const FloatRule *r;
+    XClassHint ch = { NULL, NULL };
+
+    /* rule matching */
+    XGetClassHint(dpy, c->win, &ch);
+    class    = ch.res_class ? ch.res_class : broken;
+    instance = ch.res_name  ? ch.res_name  : broken;
+
+    for (i = 0; i < LENGTH(float_rules); i++) {
+        r = &float_rules[i];
+        if ((!r->title || strstr(c->name, r->title))
+        && (!r->class || strstr(class, r->class))
+        && (!r->instance || strstr(instance, r->instance)))
+        {
+            if (r->x < sw) c->x = c->oldx = r->x;
+            if (r->y < sh) c->y = c->oldy = r->y;
+            break;
+        }
+    }
 }
 
 void
@@ -2638,11 +2667,6 @@ zoom(const Arg *arg)
 void
 lastcli(const Arg *arg)
 {
-    // debug
-    //FILE *fp = NULL;
-    //fp = fopen("/tmp/debug.txt", "w+");
-    //fprintf(fp, "%d %d", selmon->sel->tags, selmon->sel->snext->tags);
-    //fclose(fp);
     if(selmon->sel && selmon->sel->snext) {
         if(selmon->sel->tags == selmon->sel->snext->tags) {
             focus(selmon->sel->snext);
