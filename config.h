@@ -23,6 +23,7 @@ static const char col_ice[]         = "#57c6fe";
 static const unsigned int baralpha  = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int topmask   = 1 << 30;
+static const unsigned int sfloat    = 233;
 static const char *colors[][3]      = {
     /*                    fg         bg         border   */
     [SchemeNorm]      = { col_gray3, col_gray1, col_gray2 },
@@ -61,6 +62,11 @@ static const Rule rules[] = {
     { "flameshot",            NULL,       "float",                             0,            3,           -1 },
     { "XVkbd",                NULL,       NULL,                                topmask,      3,           -1 },
 
+};
+
+static const FloatRule float_rules[] = {
+    /* class   instance title x    y */
+    { "XVkbd", NULL,    NULL, 100, 500},
 };
 
 /* layout(s) */

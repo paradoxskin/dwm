@@ -150,6 +150,14 @@ typedef struct {
     int monitor;
 } Rule;
 
+typedef struct {
+    const char *class;
+    const char *instance;
+    const char * title;
+    int x;
+    int y;
+} FloatRule;
+
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
