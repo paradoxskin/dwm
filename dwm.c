@@ -1449,6 +1449,7 @@ applysfloatrules(Client *c) {
             break;
         }
     }
+    c->bw = 0;
 }
 
 void
