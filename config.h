@@ -110,7 +110,7 @@ static const Key keys[] = {
     { MODKEY,                       XK_space,                   spawn,          SHCMD("st -c float -A 0.5") },
     { MODKEY,                       XK_Print,                   spawn,          SHCMD("~/.scripts/screenshot") },
     { 0,                            XK_Print,                   spawn,          SHCMD("~/.scripts/screenshot area") },
-    { MODKEY,                       XK_F1,                      spawn,          SHCMD("~/.scripts/switchtouchpad") },
+    { MODKEY,                       XK_F1,                      spawn,          SHCMD("~/.scripts/beastmode") },
     { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("~/.scripts/vol") },
     { 0,                            XF86XK_AudioRaiseVolume,    spawn,          SHCMD("~/.scripts/vol up") },
     { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("~/.scripts/vol down") },
