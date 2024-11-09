@@ -117,6 +117,7 @@ static const Key keys[] = {
     { 0,                            XF86XK_AudioPlay,           spawn,          SHCMD("~/.scripts/sptfycon") },
     { 0,                            XF86XK_AudioPrev,           spawn,          SHCMD("~/.scripts/sptfycon prev") },
     { 0,                            XF86XK_AudioNext,           spawn,          SHCMD("~/.scripts/sptfycon next") },
+    { 0,                            XF86XK_PowerOff,            spawn,          SHCMD("~/.scripts/lock") },
     { MODKEY,                       XK_o,                       spawn,          SHCMD("~/.scripts/cgbg") },
     { MODKEY|ShiftMask,             XK_o,                       spawn,          SHCMD("~/.scripts/cgbg pure") },
     { MODKEY|ShiftMask,             XK_l,                       spawn,          SHCMD("slock") },
